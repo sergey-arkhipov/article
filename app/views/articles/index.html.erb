@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1 class='title has-text-centered'>Демо версия</h1>
+    <%= link_to "Новый документ", new_article_path , class: 'button is-fullwidth' %>
+    <%= form_with(url: articles_url, method: 'get' ) do |form| %>
+    <div class='field'>
+      <%= form.label :query, "Поиск документов:", class:'label has-text-centered' %>
+      <p class="control has-icons-left">
+        <%= form.text_field :query , value: query, class: 'input', autocomplete: 'off'%>
+        <span class="icon is-left">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </span>
+      </p>
+      <p class="help">Введите ключевые слова для поиска</p>
+      <%= form.submit 'Искать!' , class: 'button is-fullwidth is-outlined is-primary'%>
+    </div>
+  <% end %>
+  <div id="articles">
+  <% if @articles.count > 0 %>
+    <%= render 'articles', articles: @articles %>
+    <% else %>
+    <p>"Нет таких документов"</p>
+    <% end %>
+  </div>
+</div>

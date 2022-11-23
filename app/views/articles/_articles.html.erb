@@ -1,0 +1,14 @@
+<%= turbo_frame_tag "articles" do %>
+  <% if @pagy.pages > 1 %>
+    <div class="level-right">
+      <nav class="pagination is-rounded">
+        <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
+        <%== pagy_bulma_nav(@pagy) %>
+      </nav>
+    </div>
+  <% end %>
+  <table class='table is-bordered is-fullwidth is-striped'>
+  <th>Id</th><th>Автор</th><th>Название</th><th>Дата изменения</th>
+  <%= render articles %>
+  </table>
+<% end %>

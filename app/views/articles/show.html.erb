@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+<section>
+  <div class='box'>
+    <strong>N-<%= @article.id %></strong>
+  </div>
+  <div class='box'>
+    <%= @article.author %>
+  </div>
+  <div class='box'>
+    <%= link_to @article.title, @article %>
+  </div>
+  <div class='box'>
+    <%= link_to @article.text, @article %>
+  </div>
+</section>
+<div class='box'>
+  <%= link_to "Edit this article", edit_article_path(@article) , class: 'button' %>
+  <%= link_to "Back to articles", articles_path , class: 'button' %>
+  <%= button_to "Destroy this article", @article, method: :delete , class: 'button' %>
+</div>
