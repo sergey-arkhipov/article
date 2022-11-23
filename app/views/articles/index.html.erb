@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
 <div class="container">
   <h1 class='title has-text-centered'>Демо версия</h1>
-    <%= link_to "Новый документ", new_article_path , class: 'button is-fullwidth' %>
+    <%= link_to "Новый документ", new_article_path , class: 'button is-fullwidth is-info is-outlined' %>
     <%= form_with(url: articles_url, method: 'get' ) do |form| %>
-    <div class='field'>
+    <div class='field py-1'>
       <%= form.label :query, "Поиск документов:", class:'label has-text-centered' %>
       <p class="control has-icons-left">
         <%= form.text_field :query , value: query, class: 'input', autocomplete: 'off'%>
@@ -16,10 +16,6 @@
     </div>
   <% end %>
   <div id="articles">
-  <% if @articles.count > 0 %>
     <%= render 'articles', articles: @articles %>
-    <% else %>
-    <p>"Нет таких документов"</p>
-    <% end %>
   </div>
 </div>

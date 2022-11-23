@@ -1,45 +1,19 @@
 class Article < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
   extend Pagy::ElasticsearchRails
+  after_initialize :default_values
 
-  settings analysis: {
-    filter: {
-      russian_stop: {
-        type: 'stop',
-        stopwords: '_russian_'
-      },
-      russian_keywords: {
-        type: 'keyword_marker',
-        keywords: ['пример']
-      },
-      russian_stemmer: {
-        type: 'stemmer',
-        language: 'russian'
-      },
-      substring: {
-        type: 'nGram',
-        min_gram: 2,
-        max_gram: 50
-      }
-
-    },
-    analyzer: {
-      rebuilt_russian: {
-        tokenizer: 'standard',
-        filter: %w[
-          lowercase
-          russian_stop
-          russian_keywords
-          russian_stemmer
-          substring
-        ]
-      }
-    }
-  } do
+  settings do
     mappings dynamic: false do
-      indexes :author, type: :text
-      indexes :title, type: :text, analyzer: :rebuilt_russian
+      indexes :title, type: :text, analyzer: :russian
     end
+  end
+
+  private
+
+  def default_values
+    return unless new_record?
+
+    self.changed_on = DateTime.current
   end
 end

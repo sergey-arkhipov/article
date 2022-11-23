@@ -1,14 +1,19 @@
-  <tr>
-    <td>
-      <strong><%= prefix(article.id )%></strong>
-    </td>
-    <td>
-      <%= article.author %>
-    </td>
-    <td>
-      <%= link_to article.title, article %>
-    </td>
-    <td>
-      <%= article.changed_on %>
-    </td>
-  </tr>
+<tr>
+  <td>
+    <strong><%= prefix(article.id )%></strong>
+  </td>
+  <td>
+    <%= article.author %>
+  </td>
+  <td>
+    <%= link_to article.title, article %>
+  </td>
+  <td>
+  <% if article.changed_on %>
+    <%= article.changed_on.strftime('%F') %>
+    <% end %>
+  </td>
+  <td>
+    <%= article.version %>
+  </td>
+</tr>

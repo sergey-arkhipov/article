@@ -4,8 +4,8 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @pagy, @articles = pagy_elasticsearch_rails(@articles, items: 5)
-    render :index, locals: { query: params[:query]}
+    @pagy, @articles = pagy_elasticsearch_rails(@articles, items: 3)
+    render :index, locals: { query: params[:query] }
   end
 
   # GET /articles/1 or /articles/1.json
@@ -64,7 +64,7 @@ class ArticlesController < ApplicationController
   def check_params(article, article_params)
     if article.text == article_params['text']
 
-      article.errors.add(:text, 'Нет изменений для сохранения')
+      article.errors.add('Содержание:', 'Нет изменений для сохранения')
       return false
     end
     true

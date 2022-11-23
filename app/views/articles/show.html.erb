@@ -1,20 +1,29 @@
 <p style="color: green"><%= notice %></p>
 <section>
   <div class='box'>
-    <strong>N-<%= @article.id %></strong>
+    <strong>Код статьи:</strong>
+    <%= prefix(@article.id) %>
+    <p>
+      <strong class='pt-2'>
+        Автор:
+      </strong>
+      <%= @article.author %>
+    </p>
   </div>
   <div class='box'>
-    <%= @article.author %>
+    <div class='is-inline-block'>
+      <strong>Заголовок:</strong>
+    </div>
+    <p>
+      <%= @article.title %>
+    </p>
   </div>
   <div class='box'>
-    <%= link_to @article.title, @article %>
-  </div>
-  <div class='box'>
-    <%= link_to @article.text, @article %>
+    <p><b>Содержание</b></p>
+    <%= @article.text %>
   </div>
 </section>
 <div class='box'>
-  <%= link_to "Edit this article", edit_article_path(@article) , class: 'button' %>
-  <%= link_to "Back to articles", articles_path , class: 'button' %>
-  <%= button_to "Destroy this article", @article, method: :delete , class: 'button' %>
+  <%= link_to "Редактировать текст", edit_article_path(@article) , class: 'button is-fullwidth is-danger is-outlined' %>
+  <%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-primary is-outlined' %>
 </div>
