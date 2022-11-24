@@ -1,3 +1,3 @@
 <h1 class='title has-text-centered'>Редактирование статьи</h1>
 <%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-primary is-outlined' %>
-<%= render "form_edit", article: @article ,text_button: 'Обновить статью'%>
+<%= render "form_edit", article: @article, texts: text, text_button: 'Обновить статью'%>

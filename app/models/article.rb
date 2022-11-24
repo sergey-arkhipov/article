@@ -1,10 +1,15 @@
 class Article < ApplicationRecord
-  include Searchable
   extend Pagy::ElasticsearchRails
-  after_initialize :default_values
+  include Searchable
+  has_many :texts, dependent: :destroy
+  accepts_nested_attributes_for :texts, allow_destroy: true
+
+  before_save :default_values
+  after_save :callback_elastick
 
   settings do
     mappings dynamic: false do
+      indexes :id, type: :integer
       indexes :title, type: :text, analyzer: :russian
     end
   end
@@ -16,4 +21,6 @@ class Article < ApplicationRecord
 
     self.changed_on = DateTime.current
   end
+
+  
 end

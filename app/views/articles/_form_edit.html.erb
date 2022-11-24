@@ -24,12 +24,14 @@
       <%= form.text_field :title , class: "input", placeholder: :title,  disabled: :true%>
       <div>
         <b>Содержание:</b>
-        <%= form.text_area :text, class: "input textarea is-medium" , placeholder: :text%>
-      </div>
-      <b>
-        <%= form.label 'Опубликовано:'%>
-      </b>
-      <%= form.datetime_local_field :changed_on , class: "input", placeholder: :changed_on , disabled: :true%>
+        <%= form.fields_for texts do |t|%>
+          <%= t.text_area :text, class: "input textarea is-medium" , placeholder: :text%>
+        </div>
+        <b>
+          <%= t.label 'Опубликовано:'%>
+        </b>
+        <%= t.datetime_local_field :changed_on , class: "input", placeholder: :changed_on , disabled: :true%>
+      <% end %>
       <div class="control">
         <%= form.submit text_button, class: 'button is-fullwidth is-danger is-outlined' %>
       </div>

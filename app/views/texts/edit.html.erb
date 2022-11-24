@@ -1,0 +1,40 @@
+<h1 class='title has-text-centered'>Редактирование статьи</h1>
+<%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-primary is-outlined' %>
+<div class = 'box'>
+  <%= form_with model: text do |form| %>
+    <% if text.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(text.errors.count, "ошибка") %>
+          не позволяет сохранить изменения:</h2>
+        <ul>
+          <% text.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class='field'>
+      <div class="field">
+        <b>
+          <%= form.label 'Автор:'%>
+        </b>
+        <%= text.article.author%>
+      </div>
+      <b>
+        <%= form.label 'Заголовок:'%>
+      </b>
+      <%= text.article.title %>
+      <div>
+        <b>Содержание:</b>
+        <%= form.text_area :text, class: "input textarea is-medium" , placeholder: :text%>
+      </div>
+      <b>
+        <%= form.label 'Опубликовано:'%>
+      </b>
+      <%= form.datetime_local_field :changed_on , class: "input", placeholder: :changed_on , disabled: :true%>
+      <div class="control">
+        <%= form.submit text_button, class: 'button is-fullwidth is-danger is-outlined' %>
+      </div>
+    </div>
+  <% end %>
+</div>

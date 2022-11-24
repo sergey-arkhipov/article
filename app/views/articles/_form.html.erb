@@ -17,9 +17,11 @@
       </div>
       <%= form.text_field :title , class: "input", placeholder: 'Заголовок'%>
       <div>
-        <%= form.text_area :text, class: "textarea" , cols: 40, rows: 10, placeholder: 'Введите текст статьи'%>
-      </div>
-      <%= form.datetime_local_field :changed_on , class: "input", placeholder: 'Дата изменения', disabled: :true%>
+        <%= form.fields_for :texts do |t| %>
+          <%= t.text_area :text, class: "textarea" , cols: 40, rows: 10, placeholder: 'Введите текст статьи'%>
+        </div>
+        <%= t.datetime_local_field :changed_on ,value: DateTime.current.strftime("%Y-%m-%dT%T"), class: "input", disabled: :true%>
+      <% end %>
       <div class="control">
         <%= form.submit text_button, class: 'button is-fullwidth is-primary is-outlined' %>
       </div>

@@ -102,6 +102,8 @@ GEM
       multi_json
     erb-formatter (0.3.0)
     erubi (1.11.0)
+    faker (3.0.0)
+      i18n (>= 1.8.11, < 2)
     faraday (1.10.2)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -256,6 +258,7 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   erb-formatter
+  faker
   importmap-rails
   jbuilder
   pagy

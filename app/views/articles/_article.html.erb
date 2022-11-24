@@ -3,14 +3,14 @@
     <strong><%= prefix(article.id )%></strong>
   </td>
   <td>
-    <%= article.author %>
+    <%= link_to article.author, article %>
   </td>
   <td>
     <%= link_to article.title, article %>
   </td>
   <td>
-  <% if article.changed_on %>
-    <%= article.changed_on.strftime('%F') %>
+    <% if article.changed_on %>
+      <%= article.changed_on.strftime('%F') %>
     <% end %>
   </td>
   <td>

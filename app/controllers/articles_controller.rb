@@ -9,16 +9,23 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1 or /articles/1.json
-  def show; end
+  def show
+    # console
+    @text = Text.find(@article.texts.ids)
+    version = params[:version] ? params[:version].to_i : @text.count - 1
+    render :show, locals: { version: }
+  end
 
   # GET /articles/new
   def new
     @article = Article.new
+    @article.texts.build
   end
 
   # GET /articles/1/edit
   def edit
-    render :edit, locals: { edit: 'edit' }
+    text = Text.find(params[:version])
+    render :edit, locals: { edit: 'edit', text: }
   end
 
   # POST /articles or /articles.json
@@ -27,7 +34,7 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to article_url(@article), notice: 'Article was successfully created.' }
+        format.html { redirect_to article_url(@article), notice: 'Cтатья была успешно создана.' }
         format.json { render :show, status: :created, location: @article }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,17 +44,17 @@ class ArticlesController < ApplicationController
   end
 
   # PATCH/PUT /articles/1 or /articles/1.json
-  def update
-    respond_to do |format|
-      if check_params(@article, article_params) && gets_version(@article, article_params).save
-        format.html { redirect_to article_url(@article), notice: 'Article version was successfully created.' }
-        format.json { render :show, status: :ok, location: @article }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #      if check_params(@article, article_params) && gets_version(@article, article_params).save
+  #       format.html { redirect_to article_url(@article), notice: 'Article version was successfully created.' }
+  #       format.json { render :show, status: :ok, location: @article }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @article.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /articles/1 or /articles/1.json
   def destroy
@@ -60,24 +67,6 @@ class ArticlesController < ApplicationController
   end
 
   private
-
-  def check_params(article, article_params)
-    if article.text == article_params['text']
-
-      article.errors.add('Содержание:', 'Нет изменений для сохранения')
-      return false
-    end
-    true
-  end
-
-  def gets_version(article, article_params)
-    article_orig = Article.find(article.id)
-    article_version = article_orig.dup
-    article_version.text = article_params['text']
-    article_version.changed_on = DateTime.current
-    article_version.version = article_orig.version + 1
-    article_version
-  end
 
   # Return Elasticseach when search or all
   def set_search
@@ -96,6 +85,7 @@ class ArticlesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def article_params
-    params.fetch(:article, {}).permit(:author, :title, :text, :version, :status, :changed_on)
+    params.require(:article).permit(:id, :author, :title, :version, :status, :changed_on,
+                                    texts_attributes: %i[text changed_on archive])
   end
 end

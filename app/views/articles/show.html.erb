@@ -1,4 +1,5 @@
 <p style="color: green"><%= notice %></p>
+<%= button_to "Удалить статью полностью!", @article, method: :delete , class: 'button is-fullwidth is-danger is-outlined' %>
 <section>
   <div class='box'>
     <strong>Код статьи:</strong>
@@ -9,21 +10,44 @@
       </strong>
       <%= @article.author %>
     </p>
-  </div>
-  <div class='box'>
-    <div class='is-inline-block'>
-      <strong>Заголовок:</strong>
-    </div>
     <p>
-      <%= @article.title %>
+      <strong class='pt-2'>
+        Дата изменения:
+      </strong>
+      <%= @article.changed_on.strftime("%Y-%m-%d %T") %>
     </p>
+    <strong class='pt-2'>
+      Количество версий:
+    </strong>
+    <%= @version_count %>
+  </p>
+</div>
+<div class='box'>
+  <div class='is-inline-block'>
+    <strong>Заголовок:</strong>
   </div>
-  <div class='box'>
-    <p><b>Содержание</b></p>
-    <%= @article.text %>
+  <p>
+    <%= @article.title %>
+  </p>
+</div>
+<div class='box'>
+  <div class="panel-tabs is-centered">
+    <ul> Версии:</ul>
+    <% @text.each_with_index do |  version, idx |%>
+      <ul>
+        <%= link_to articles_text_path(id: @article, version: idx) , data: {turbo_frame: 'panelpanel', turbo_method: 'get', panel_target: 'tab', action: 'click->panel#onclick' } do %>
+          <%=idx%>
+        </ul>
+      <% end%>
+    <% end%>
   </div>
+  <p><b>Содержание</b></p>
+  <%= turbo_frame_tag 'panelpanel'  do %>
+    <%= render 'shared/text' ,text: @text[version]%>
+    <%= link_to "Редактировать текст", edit_text_path(@text[version].id ) , class: 'button is-fullwidth is-danger is-outlined' %>
+  <% end %>
+</div>
 </section>
 <div class='box'>
-  <%= link_to "Редактировать текст", edit_article_path(@article) , class: 'button is-fullwidth is-danger is-outlined' %>
   <%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-primary is-outlined' %>
 </div>
