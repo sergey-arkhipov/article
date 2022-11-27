@@ -3,7 +3,6 @@
 one:
   author: MyString
   title: MyString
-  text: MyText
   status: 1
   version: 1
   changed_on: 2022-11-22 13:55:29
@@ -11,7 +10,6 @@ one:
 two:
   author: MyString
   title: MyString
-  text: MyText
   status: 1
   version: 1
   changed_on: 2022-11-22 13:55:29

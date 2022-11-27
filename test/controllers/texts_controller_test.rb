@@ -1,8 +1,12 @@
-require "test_helper"
+require 'test_helper'
 
 class TextsControllerTest < ActionDispatch::IntegrationTest
-  test "should get edit" do
-    get texts_edit_url
+  setup do
+    @article = articles(:one)
+    @text = @article.texts.create(text: 'BlaBla')
+  end
+  test 'should get edit' do
+    get edit_text_url(@text)
     assert_response :success
   end
 end
