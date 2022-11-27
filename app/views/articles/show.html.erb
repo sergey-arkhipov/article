@@ -1,53 +1,37 @@
-<p style="color: green"><%= notice %></p>
-<%= button_to "Удалить статью полностью!", @article, method: :delete , class: 'button is-fullwidth is-danger is-outlined' %>
-<section>
-  <div class='box'>
-    <strong>Код статьи:</strong>
-    <%= prefix(@article.id) %>
-    <p>
-      <strong class='pt-2'>
-        Автор:
-      </strong>
+<div class='py-1'>
+  <p style="color: green"><%= notice %></p>
+  <%= button_to "Удалить статью полностью!", @article, method: :delete , class: 'button is-fullwidth is-danger is-outlined' %>
+  <section class='py-1'>
+    <div class='box py-1 is-size-7'>
+      <b>Код статьи:</b>
+      <%= prefix(@article.id) %>
+      <b><%=Article.human_attribute_name(:author) %>:</b>
       <%= @article.author %>
-    </p>
-    <p>
-      <strong class='pt-2'>
-        Дата изменения:
-      </strong>
+      <b><%=Article.human_attribute_name(:changed_on) %>:</b>
       <%= @article.changed_on.strftime("%Y-%m-%d %T") %>
-    </p>
-    <strong class='pt-2'>
-      Количество версий:
-    </strong>
-    <%= @version_count %>
-  </p>
+    </div>
+    <div class='box py-1 is-size-7'>
+      <b><%=Article.human_attribute_name(:title) %>:</b>
+      <p> <%= @article.title %> </p>
+    </div>
+    <div class='box py-1 is-size-7'>
+      <% if @pagy.pages >= 1 %>
+        <div class="level-right">
+          <div class='level-item has-text-weight-bold'>Версия :</div>
+          <nav class='pagination is-rounded'>
+            <%== pagy_bulma_nav(@pagy, size: [1,1,1,1], pagy_id: 'pagy_nav' )%>
+          </nav>
+        </div>
+      <% end %>
+    </div>
+    <div class='box py-1'>
+      <p><b>Содержание</b></p>
+      <%= render 'shared/text' ,text: @texts[0]%>
+      <%= link_to "Создать новую версию", edit_text_path(@texts[0].id ) , class: 'button  is-fullwidth is-info is-outlined' %>
+      <%= button_to "Удалить данную версию", text_path(@texts[0].id ) , method: :delete, class: 'button is-small is-fullwidth is-danger is-outlined' %>
+    </div>
+  </section>
 </div>
 <div class='box'>
-  <div class='is-inline-block'>
-    <strong>Заголовок:</strong>
-  </div>
-  <p>
-    <%= @article.title %>
-  </p>
-</div>
-<div class='box'>
-  <div class="panel-tabs is-centered">
-    <ul> Версии:</ul>
-    <% @text.each_with_index do |  version, idx |%>
-      <ul>
-        <%= link_to articles_text_path(id: @article, version: idx) , data: {turbo_frame: 'panelpanel', turbo_method: 'get', panel_target: 'tab', action: 'click->panel#onclick' } do %>
-          <%=idx%>
-        </ul>
-      <% end%>
-    <% end%>
-  </div>
-  <p><b>Содержание</b></p>
-  <%= turbo_frame_tag 'panelpanel'  do %>
-    <%= render 'shared/text' ,text: @text[version]%>
-    <%= link_to "Редактировать текст", edit_text_path(@text[version].id ) , class: 'button is-fullwidth is-danger is-outlined' %>
-  <% end %>
-</div>
-</section>
-<div class='box'>
-  <%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-primary is-outlined' %>
+  <%= link_to "Возврат к поиску", articles_path , class: 'button is-fullwidth is-info is-outlined' %>
 </div>

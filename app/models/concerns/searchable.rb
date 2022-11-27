@@ -12,9 +12,10 @@ module Searchable
           query_string: {
             query: query.to_s,
             fields: ['title']
-          } },
-        from: 0,
-        size: 50,
+          }
+        },
+        # from: 0,
+        # size: 20,
         **params
       )
     end
@@ -23,7 +24,7 @@ module Searchable
       __elasticsearch__.all
     end
   end
-  # Instance methods
+  # Instance methods. Can be unnecessary
   def callback_elastick
     Article.__elasticsearch__.create_index!
     Article.import

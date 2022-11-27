@@ -1,18 +1,20 @@
-<%= turbo_frame_tag "articles" do %>
+<div>
   <% if @pagy.pages > 1 %>
     <div class="level-right py-2">
-      <nav class="pagination is-rounded">
-        <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
-        <%== pagy_bulma_nav(@pagy) %>
+      <nav class='pagination is-rounded is-small'>
+        <%== pagy_bulma_nav(@pagy, size: [1,1,1,1], pagy_id: 'pagy_nav')%>
       </nav>
     </div>
   <% end %>
-  <table class='table is-bordered is-fullwidth is-striped'>
-  <thead class='has-text-centered'>
-  <th>Код</th><th>Автор</th><th>Заголовок</th><th>Дата изменения</th><th>Вер.</th>
-  <thead>
-  <% if @articles.count > 0 %>
-  <%= render articles %>
-    <% end %>
-  </table>
-<% end %>
+  <% if @pagy.items > 0 %>
+    <table class='table is-bordered is-fullwidth is-striped'>
+      <thead class='has-text-centered'>
+        <th>Код</th>
+        <th>Автор</th>
+        <th>Заголовок</th>
+        <th>Дата изменения</th>
+      </thead>
+      <%= render articles %>
+    </table>
+  <% end %>
+</div>

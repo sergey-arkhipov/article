@@ -1,23 +1,22 @@
 # frozen_string_literal: true
+
 require 'pagy/extras/elasticsearch_rails'
 
 # Pagy initializer file (5.10.1)
 # Customize only what you really need and notice that the core Pagy works also without any of the following lines.
 # Should you just cherry pick part of this file, please maintain the require-order of the extras
 
-
 # Pagy DEFAULT Variables
 # See https://ddnexus.github.io/pagy/api/pagy#variables
 # All the Pagy::DEFAULT are set for all the Pagy instances but can be overridden per instance by just passing them to
 # Pagy.new|Pagy::Countless.new|Pagy::Calendar::*.new or any of the #pagy* controller methods
 
-
 # Instance variables
 # See https://ddnexus.github.io/pagy/api/pagy#instance-variables
 # Pagy::DEFAULT[:page]   = 1                                  # default
 # Pagy::DEFAULT[:items]  = 20                                 # default
+Pagy::DEFAULT[:items] = 4
 # Pagy::DEFAULT[:outset] = 0                                  # default
-
 
 # Other Variables
 # See https://ddnexus.github.io/pagy/api/pagy#other-variables
@@ -30,10 +29,8 @@ require 'pagy/extras/elasticsearch_rails'
 # Pagy::DEFAULT[:i18n_key]   = 'pagy.item_name'                # default
 # Pagy::DEFAULT[:cycle]      = true                            # example
 
-
 # Extras
 # See https://ddnexus.github.io/pagy/extras
-
 
 # Backend Extras
 
@@ -118,7 +115,6 @@ require 'pagy/extras/elasticsearch_rails'
 # uncomment if you are going to use Searchkick.pagy_search
 # Searchkick.extend Pagy::Searchkick
 
-
 # Frontend Extras
 
 # Bootstrap extra: Add nav, nav_js and combo_nav_js helpers and templates for Bootstrap pagination
@@ -155,7 +151,6 @@ require 'pagy/extras/bulma'
 # See https://ddnexus.github.io/pagy/extras/navs#steps
 # Pagy::DEFAULT[:steps] = { 0 => [2,3,3,2], 540 => [3,5,5,3], 720 => [5,7,7,5] }   # example
 
-
 # Feature Extras
 
 # Gearbox extra: Automatically change the number of items per page depending on the page number
@@ -175,8 +170,8 @@ require 'pagy/extras/bulma'
 
 # Overflow extra: Allow for easy handling of overflowing pages
 # See https://ddnexus.github.io/pagy/extras/overflow
-# require 'pagy/extras/overflow'
-# Pagy::DEFAULT[:overflow] = :empty_page    # default  (other options: :last_page and :exception)
+require 'pagy/extras/overflow'
+Pagy::DEFAULT[:overflow] = :last_page # default  (other options: :empty_page :last_page and :exception)
 
 # Support extra: Extra support for features like: incremental, infinite, auto-scroll pagination
 # See https://ddnexus.github.io/pagy/extras/support
@@ -192,7 +187,6 @@ require 'pagy/extras/bulma'
 # See https://ddnexus.github.io/pagy/extras/standalone
 # require 'pagy/extras/standalone'
 # Pagy::DEFAULT[:url] = 'http://www.example.com/subdir'  # optional default
-
 
 # Rails
 # Enable the .js file required by the helpers that use javascript
@@ -213,15 +207,16 @@ require 'pagy/extras/bulma'
 # Examples:
 # load the "de" built-in locale:
 # Pagy::I18n.load(locale: 'de')
+# Pagy::I18n.load(locale: 'ru')
 #
 # load the "de" locale defined in the custom file at :filepath:
 # Pagy::I18n.load(locale: 'de', filepath: 'path/to/pagy-de.yml')
 #
 # load the "de", "en" and "es" built-in locales:
 # (the first passed :locale will be used also as the default_locale)
-# Pagy::I18n.load({ locale: 'de' },
-#                 { locale: 'en' },
-#                 { locale: 'es' })
+Pagy::I18n.load({ locale: 'ru' },
+                { locale: 'en' },
+                { locale: 'de' })
 #
 # load the "en" built-in locale, a custom "es" locale,
 # and a totally custom locale complete with a custom :pluralize proc:
@@ -232,7 +227,6 @@ require 'pagy/extras/bulma'
 #                   filepath: 'path/to/pagy-xyz.yml',
 #                   pluralize: lambda{ |count| ... } )
 
-
 # I18n extra: uses the standard i18n gem which is ~18x slower using ~10x more memory
 # than the default pagy internal i18n (see above)
 # See https://ddnexus.github.io/pagy/extras/i18n
@@ -241,7 +235,5 @@ require 'pagy/extras/bulma'
 # Default i18n key
 # Pagy::DEFAULT[:i18n_key] = 'pagy.item_name'   # default
 
-
 # When you are done setting your own default freeze it, so it will not get changed accidentally
 Pagy::DEFAULT.freeze
-

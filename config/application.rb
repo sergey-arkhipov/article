@@ -16,6 +16,8 @@ module Articles
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
+    config.i18n.available_locales = %i[ru en]
+    config.i18n.default_locale = :ru
     config.time_zone = 'Europe/Moscow'
     # config.eager_load_paths << Rails.root.join("extras")
   end
