@@ -80,6 +80,43 @@ ELASTIC_PASSWORD and CERT_FINGERPRINT required if elasticseach has been installe
 
 ## Run tests
 
+### Configure test node elasticsearch
+
+Start the elasticsearch test server <http://localhost:9250>
+If you installed an elasticsearch server with SSL and certificate support, create a separate configuration for the test environment with an anonymous user
+
+#### Example
+
+```conf
+# conf_test/elasticsearch.yml
+cluster.name: test_rails
+node.name: test-node
+path.data: $ES_HOME/test_data
+path.logs: $ES_HOME/logs_test
+http.port: 9250
+http.host: 0.0.0.0
+xpack.security.authc:
+  anonymous:
+    username: anonymous
+    roles: admins
+    authz_exception: true
+
+# conf_test/roles.yml
+admins:
+  cluster:
+  - all
+  indices:
+  - names: ["*"]
+    privileges: [all]
+```
+
+```console
+% ES_PATH_CONF=./conf_test ./bin/elasticsearch
+
+```
+
+### Run tests
+
 ```console
 % ./bin/rails t
 % ./bin/rspec --color -f d

@@ -87,6 +87,10 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     debug (1.6.3)
       irb (>= 1.3.6)
       reline (>= 0.3.1)
@@ -106,6 +110,11 @@ GEM
       multi_json
     erb-formatter (0.3.0)
     erubi (1.11.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (3.0.0)
       i18n (>= 1.8.11, < 2)
     faraday (1.10.2)
@@ -285,10 +294,12 @@ DEPENDENCIES
   bootsnap
   byebug
   capybara
+  database_cleaner-active_record
   debug
   elasticsearch-model
   elasticsearch-rails
   erb-formatter
+  factory_bot_rails
   faker
   importmap-rails
   jbuilder

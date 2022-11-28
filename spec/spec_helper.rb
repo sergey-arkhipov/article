@@ -13,6 +13,8 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'elasticsearch'
+# rubocop:disable Metrics/BlockLength
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -46,6 +48,7 @@ RSpec.configure do |config|
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
+# rubocop:disable Style/BlockComments
 =begin
   # This allows you to limit a spec run to individual examples or groups
   # you care about by tagging them with `:focus` metadata. When nothing
@@ -91,4 +94,13 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.before(:context) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.after(:context) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+  end
 end

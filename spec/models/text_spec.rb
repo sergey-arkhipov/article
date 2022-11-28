@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe 'Testing model Text', type: :model do

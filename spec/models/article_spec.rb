@@ -1,8 +1,16 @@
 require 'rails_helper'
+require 'elastic_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Article, type: :model do
   context 'Working with Article' do
+    it 'Create article create elastic index (callback work)' do
+      ElascticHelper.drop_elastic_index
+      count = Article.count
+
+      Article.create(author: 'Test author', title: 'Example Title')
+      expect(Article.count- count).to(eq(1))
+    end
     it 'Create Article' do
       count = Article.count
       Article.create(author: 'Test author', title: 'Example Title')
